@@ -10,6 +10,7 @@ public class CacheSimulator {
     private int totalMisses = 0, readMisses = 0, writeMisses = 0, dirtyEvictions = 0;
     private static final int MEMORY_SIZE = 16 * 1024 * 1024 / 4;
 
+    // Conctructor for CacheSimulator
     public CacheSimulator(int capacity, int blocksize, int associativity) {
         if (capacity <= 0 || blocksize <= 0 || associativity <= 0) {
             throw new IllegalArgumentException("Cache capacity, block size, and associativity must be positive.");
@@ -165,7 +166,7 @@ public class CacheSimulator {
                             (writeMisses * 100.0) / (totalMisses + readMisses + writeMisses));
         // more print for cache contents
     }
-    
+
     public static void main(String[] args) {
         try {
             CacheSimulator simulator = new CacheSimulator(Integer.parseInt(args[1]), Integer.parseInt(args[3]), Integer.parseInt(args[5]));
