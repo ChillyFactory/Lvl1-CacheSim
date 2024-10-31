@@ -1,0 +1,5 @@
+*.class
+checker.pl
+*.trace
+*.txt
+TestCacheSim.java
