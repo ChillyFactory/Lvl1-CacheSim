@@ -7,7 +7,8 @@ public class CacheSimulator {
     private int associativity;
     private CacheSet[] cache;
     private int[] mainMemory;
-    private int totalMisses = 0, readMisses = 0, writeMisses = 0, dirtyEvictions = 0;
+    private int totalMisses = 0, readMisses = 0, writeMisses = 0, dirtyEvictions = 0,
+        totalLines = 0, totalRead = 0, totalWrite = 0;
     private static final int MEMORY_SIZE = 16 * 1024 * 1024 / 4;
 
     // Conctructor for CacheSimulator
@@ -48,10 +49,13 @@ public class CacheSimulator {
             String[] tokens = line.split(" ");
             int operation = Integer.parseInt(tokens[0]);
             int address = Integer.parseInt(tokens[1], 16);
+            totalLines++;
 
             if (operation == 0 ) {
+                totalRead++;
                 read(address);
             }else if (operation == 1) {
+                totalWrite++;
                 int dataword = Integer.parseInt(tokens[2], 16);
                 write(address, dataword);
             }
@@ -161,9 +165,11 @@ public class CacheSimulator {
         System.out.printf("STATISTICS:\n");
         System.out.printf("TotalMisses: %d ReadMisses: %d WriteMisses: %d\n", totalMisses, readMisses, writeMisses);
         System.out.printf("TotalMissRate: %.2f%% ReadMissRate: %.2f%% WriteMissRate: %.2f%%\n",
-                            (totalMisses * 100.0) / (totalMisses + readMisses + writeMisses),
-                            (readMisses * 100.0) / (totalMisses + readMisses + writeMisses),
-                            (writeMisses * 100.0) / (totalMisses + readMisses + writeMisses));
+                            (totalMisses * 100.0) / (totalLines),
+                            (readMisses * 100.0) / (totalRead),
+                            (writeMisses * 100.0) / (totalWrite));
+        System.out.printf("Number of Dirty Blocks Evicted from the cache: %d\n\n", dirtyEvictions);
+        System.out.print("CACHE CONTENTS\n");
         // more print for cache contents
     }
 
