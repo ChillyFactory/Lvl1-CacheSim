@@ -122,7 +122,7 @@ public class CacheSimulator {
 
 
         reader.close();
-        writeBackAllDirtyBlocks();
+        //writeBackAllDirtyBlocks();
     }
 
     private void read(int address) {
@@ -204,6 +204,7 @@ public class CacheSimulator {
 
             // Update LRU
             updateLRU(set, evictIndex);
+
         }
     }
 
@@ -246,10 +247,12 @@ public class CacheSimulator {
 
     private int getSetIndex(int address) {
         int setIndex = (address / blocksize) % cache.length;
+        /* Test Address and Set
         System.out.println("Address: " + Integer.toHexString(address) + 
                        ", Blocksize: " + blocksize + 
                        ", Cache Length: " + cache.length + 
                        ", Set Index: " + setIndex);
+        */
         return setIndex;
     }
 
