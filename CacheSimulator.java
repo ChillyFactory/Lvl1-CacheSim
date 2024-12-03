@@ -312,6 +312,24 @@ public class CacheSimulator {
             "Address", "Word0", "Word1", "Word2", "Word3", "Word4", "Word5", "Word6", "Word7");
         
         int startAddress = 0x003f7f00;
+        int wordsToPrint = 1024;
+        int wordsPerLine = 8;
+        
+        for (int i = startAddress, r = 0; r < wordsToPrint / wordsPerLine; r++, i+=8) {
+            int lineAddress = startAddress + (r * wordsPerLine * 4); // Calculate starting address
+            System.out.printf("%08x", i);
+
+            for (int j = 0; j < wordsPerLine; j++) {
+                int memoryIndex = (lineAddress - startAddress) / 4 + j;
+                if (memoryIndex < mainMemory.length) {
+                    System.out.printf(" %08x", mainMemory[i + j]);
+                } else {
+                    System.out.printf(" %-10s", "-");
+                }
+            }
+            System.out.println();
+        }
+        /*
         for (int i = startAddress, r = 0; r <= 128; i += 8, r++) {
             System.out.printf("%08x", i);
             for (int j = 0; j < 8; j++) {
@@ -323,6 +341,7 @@ public class CacheSimulator {
             }
             System.out.println();
         }
+        */
     }
 
     public void printResults() {
@@ -336,7 +355,7 @@ public class CacheSimulator {
                             (writeMisses * 100.0) / (totalWrite));
         System.out.printf("Number of Dirty Blocks Evicted from the cache: %d\n\n", dirtyEvictions);
         printCacheContents();
-        // printMainMemory();
+        printMainMemory();
     }
 
     public static void main(String[] args) {
