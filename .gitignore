@@ -3,3 +3,4 @@ checker.pl
 *.trace
 *.txt
 TestCacheSim.java
+CalculateAddress.java
